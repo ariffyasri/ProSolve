@@ -1,13 +1,11 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-typedef pair<int, int> ii;
 typedef vector<int> vi;
 
-vector<ii> parseInput(string line) {
+vi parseInput(string line) {
 
     vi scores;
-    vector<ii> scores_pair;
 
     for(int i=0; i<line.length(); ) {
 
@@ -24,53 +22,33 @@ vector<ii> parseInput(string line) {
         scores.push_back(num);
     }
 
-    for(int i=0; i<scores.size(); ) {
-        
-        if(scores[i] == 10) {
-            scores_pair.push_back(make_pair(10, 0));
-            i++;
-        } else {
-            scores_pair.push_back(make_pair(scores[i], scores[i+1]));
-            i += 2;
-        }
-    }
-
-    return scores_pair;
+    return scores;
 }
 
-vi getScores(vector<ii> p) {
+vi getScores(vi p) {
 
     vi scores_frame;
+    int cframe=1;
 
-    for(int i=0; i<p.size(); i++) {
+    for(int i=0; i<p.size(); cframe++) {
 
-        int scores=0;
+        int scores = 0;
 
-        if(p[i].first == 10 && i < 10) { // if strike
-            
-            scores += 10;
-            int j=i+1;
-
-            for(int j = i+1; ;j++) {
-                if(p[j].first == 10) {
-                    scores += 10;
-                } else if (j-i == 1) {
-                    scores += p[j].first + p[j].second;
-                    break;
-                } else {
-                    scores += p[j].first;
-                    break;
-                }
-            }
+        if(p[i] == 10 && cframe <= 10) { // if strike
+            scores += 10 + p[i+1] + p[i+2];
+            i++;
         }
-        else if(p[i].first+p[i].second == 10 && i < 10) { // if spare
-            scores += 10 + p[i+1].first;
+        else if(p[i]+p[i+1] == 10 && cframe <= 10) { // if spare
+            scores += 10 + p[i+2];
+            i+=2;
         }
-        else { // open frame OR round 11 or round 12
-            scores += p[i].first + p[i].second;
+        else { // if open frame
+            scores += p[i]+p[i+1];
+            i+=2;
         }
 
         scores_frame.push_back(scores);
+
     }
 
     return scores_frame;
