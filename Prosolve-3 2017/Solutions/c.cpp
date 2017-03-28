@@ -15,7 +15,7 @@ typedef long long ll;
 ll modRes[100000];
 int mi;
 
-int getPisanoPeriod(int mod) {
+int getFibMod(int nth, int mod) {
 
     ll a = 0, b = 1, c, i;
     modRes[0] = a, modRes[1] = b, mi=2;
@@ -24,8 +24,10 @@ int getPisanoPeriod(int mod) {
         c = (a+b)%mod;
         a = b; b = c;
         modRes[mi++] = c; // store each mod for easy access later
-        if(a == 0 && b == 1) return i;
+        if(a == 0 && b == 1) break;
     }
+
+    return modRes[nth % i]; 
 }
 
 int main() {
@@ -36,6 +38,6 @@ int main() {
     for(int i=1; i<=n; i++) {
         int nth, mod;
         cin >> nth >> mod;
-        cout << modRes[nth % getPisanoPeriod(mod)] << endl;
+        printf("Case #%d: %d\n", i, getFibMod(nth, mod));
     }
 }
