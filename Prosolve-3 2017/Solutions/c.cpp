@@ -12,29 +12,18 @@ using namespace std;
 
 typedef long long ll;
 
-ll modRes[100000];
-int mi;
-
 int getFibMod(int nth, int mod) {
-
-    ll a = 0, b = 1, c, i;
-    modRes[0] = a, modRes[1] = b, mi=2;
-
+    static ll modRes[100000]; // adjust size here
+    ll a = 0, b = 1, c, i, mi=2;
+    modRes[0] = a, modRes[1] = b;
     for(i=1; ; i++) {
         c = (a+b)%mod;
-        a = b; b = c;
-        modRes[mi++] = c; // store each mod for easy access later
-        if(a == 0 && b == 1) break;
-    }
-
-    return modRes[nth % i]; 
-}
+        a = b; b = c, modRes[mi++] = c; 
+        if(a == 0 && b == 1) return modRes[nth % i]; } }
 
 int main() {
-
     int n;
     cin >> n;
-
     for(int i=1; i<=n; i++) {
         int nth, mod;
         cin >> nth >> mod;
