@@ -21,7 +21,7 @@ def main():
 
     for _ in range(n):
         h = (int(input())-1) % len(table)
-        print(["Both", "Vova", "Vanya"][table[h]])
+        print(["Both", "Jason", "Jimmy"][table[h]])
 
 if __name__ == '__main__':
     main()
